@@ -78,20 +78,23 @@ function Header() {
         label: user?.username,
         disabled: true,
       },
-      {
-        type: 'divider',
-      },
-      {
-        key: 'my-recipes',
-        icon: <BookOutlined />,
-        label: '我的食谱',
-      },
-      {
-        key: 'favorites',
-        icon: <HeartOutlined />,
-        label: '我的收藏',
-      },
     ];
+
+    if (!isAdmin()) {
+      items.push(
+        { type: 'divider' },
+        {
+          key: 'my-recipes',
+          icon: <BookOutlined />,
+          label: '我的食谱',
+        },
+        {
+          key: 'favorites',
+          icon: <HeartOutlined />,
+          label: '我的收藏',
+        }
+      );
+    }
 
     if (isAdmin()) {
       items.push(
@@ -186,13 +189,13 @@ function Header() {
               icon: <SearchOutlined />,
               label: '搜索',
             },
-            {
-              key: 'add-recipe',
-              icon: <PlusOutlined />,
-              label: '分享食谱',
-            },
-            ...(user
+            ...(!isAdmin() && user
               ? [
+                  {
+                    key: 'add-recipe',
+                    icon: <PlusOutlined />,
+                    label: '分享食谱',
+                  },
                   {
                     key: 'favorites',
                     icon: <HeartOutlined />,
@@ -202,6 +205,15 @@ function Header() {
                     key: 'my-recipes',
                     icon: <BookOutlined />,
                     label: '我的食谱',
+                  },
+                ]
+              : []),
+            ...(!isAdmin() && !user
+              ? [
+                  {
+                    key: 'add-recipe',
+                    icon: <PlusOutlined />,
+                    label: '分享食谱',
                   },
                 ]
               : []),

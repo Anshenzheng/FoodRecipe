@@ -31,15 +31,15 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route
             path="/add-recipe"
-            element={user ? <AddRecipe /> : <Navigate to="/login" />}
+            element={user && !isAdmin() ? <AddRecipe /> : <Navigate to="/" />}
           />
           <Route
             path="/favorites"
-            element={user ? <Favorites /> : <Navigate to="/login" />}
+            element={user && !isAdmin() ? <Favorites /> : <Navigate to="/" />}
           />
           <Route
             path="/my-recipes"
-            element={user ? <MyRecipes /> : <Navigate to="/login" />}
+            element={user && !isAdmin() ? <MyRecipes /> : <Navigate to="/" />}
           />
           <Route
             path="/admin"
